@@ -3,15 +3,20 @@ const { Client, GatewayIntentBits, AttachmentBuilder } = require('discord.js');
 const Canvas = require('canvas');
 const path = require('path');
 
-// --- SERVIDOR PARA RENDER (NO BORRAR) ---
+// --- SERVIDOR PARA RENDER (VERSIÓN BLINDADA) ---
 const http = require('http');
 const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Bot activo y escuchando!');
 });
+
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`🌍 Web server listo en puerto ${PORT}`));
-// ----------------------------------------
+
+// OJO: Agregamos '0.0.0.0' para que Render escuche bien desde fuera
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`🌍 Web server listo en puerto ${PORT}`);
+});
+// -----------------------------------------------
 
 const client = new Client({
     intents: [
